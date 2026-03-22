@@ -51,4 +51,8 @@ SentinelOps is an intelligent system monitoring platform that collects real-time
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/SentinelOps.git
-cd SentinelOps
+cd SentinelOps 
+
+## 🚀 Live Demo
+
+https://sentinelops-lntwwoug5cdyvburippbfc.streamlit.app/
