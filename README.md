@@ -1,77 +1,54 @@
-# SentinelOps
+# 🛡️ SentinelOps – AI Driven System Monitoring Platform
 
-SentinelOps is a predictive system health monitoring tool that collects
-system-level metrics, analyzes historical trends, computes a health score,
-generates early warnings, and visualizes system behavior over time.
+SentinelOps is an intelligent system monitoring platform that collects real-time system metrics, detects anomalies using Machine Learning, predicts future failures using time-series forecasting, and provides preventive recommendations.
 
-## Features
-- Real-time CPU, memory, and disk monitoring
-- PostgreSQL-based persistent storage
-- Time-series feature engineering
-- Health score calculation
-- Predictive alert generation
-- Historical visualization of metrics and health
+---
 
-## Technology Stack
-- Python
-- PostgreSQL
-- psutil(used to get information about system resources and running processes)
-- SQLAlchemy(work with databases in Python)
-- Pandas
-- Matplotlib
+## 🚀 Features
 
-## How to Run
+- 📊 Real-time System Metrics Monitoring (CPU, Memory, Disk)
+- 🤖 AI-Based Anomaly Detection (Isolation Forest)
+- 🔮 Failure Prediction using Time Series Forecasting (ARIMA)
+- 🚨 Smart Alert Generation Engine
+- 📈 Interactive Dashboard with Streamlit
+- 🧠 Preventive Recommendation System
+- 🗄️ PostgreSQL Data Pipeline
+- 🧩 Modular Industry-Level Architecture
 
-1. Install dependencies
+---
 
-   pip install -r requirements.txt
+## 🏗️ Project Architecture
 
-2. Run the monitoring pipeline:
+### Modules
 
-python main.py
+- **collector/** → collects system metrics using psutil  
+- **analysis/** → feature engineering & health calculation  
+- **alerts/** → alert generation engine  
+- **ai_engine/** → anomaly detection & prediction models  
+- **ui/** → multi-page monitoring dashboard  
 
+---
 
-3. Visualize metrics and health:
+## 🧠 Machine Learning Models Used
 
-python -m dashboard.visualize
+- Isolation Forest → anomaly detection  
+- ARIMA → failure forecasting  
 
+---
 
-## 🔹 STEP 3 — Final Project Structure (MEMORIZE THIS)
+## 📊 Dashboard Pages
 
-You should now have:
+- Overview → System health & KPIs  
+- Analytics → AI anomaly visualization  
+- Alerts → Monitoring console  
+- Prediction → Failure forecasting & recommendations  
 
-SentinelOps/
-│
-├── collector/
-│ └── metrics_collector.py
-│
-├── analysis/
-│ └── feature_engineering.py
-│
-├── prediction/
-│ └── health_predictor.py
-│
-├── alerts/
-│ └── alert_engine.py
-│
-├── dashboard/
-│ └── visualize.py
-│
-├── config/
-│ └── db_config.py
-│
-├── database/
-│ └── init_db.sql
-│
-├── main.py
-├── requirements.txt
-└── README.md
+---
 
-## 🔹 STEP 4 — FINAL RUN CHECKLIST (VERY IMPORTANT)
+## ⚙️ Installation
 
-Before submission or demo, always do this:
+### 1. Clone Repository
 
-python main.py
-python main.py
-python main.py
-python -m dashboard.visualize
+```bash
+git clone https://github.com/YOUR_USERNAME/SentinelOps.git
+cd SentinelOps
