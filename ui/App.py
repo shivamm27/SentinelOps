@@ -1,34 +1,19 @@
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
-from sqlalchemy.engine import URL
 
 st.set_page_config(page_title="SentinelOps", layout="wide")
 
+# ---------- LOAD DATA ----------
+metrics = pd.read_csv("data/metrics.csv")
+alerts = pd.read_csv("data/alerts.csv")
+
 # ---------- HEADER ----------
 st.markdown("""
-<h1 style='text-align:center; font-size:60px;'>🛡️ SentinelOps AI Monitoring Platform</h1>
-<p style='text-align:center; font-size:20px; color:gray;'>
-Predict • Detect • Prevent System Failures
-</p>
+<h1 style='text-align:center;'>🛡️ SentinelOps AI Monitoring Platform</h1>
+<p style='text-align:center; color:gray;'>Predict • Detect • Prevent Failures</p>
 """, unsafe_allow_html=True)
 
-# ---------- DB ----------
-url = URL.create(
-    drivername="postgresql",
-    username="postgres",
-    password="Shiv@m2727",
-    host="localhost",
-    port=5432,
-    database="sentinelops"
-)
-
-engine = create_engine(url)
-
-metrics = pd.read_sql("SELECT * FROM system_metrics", engine)
-alerts = pd.read_sql("SELECT * FROM system_alerts", engine)
-
-# ---------- KPIs ----------
+# ---------- KPI CARDS ----------
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Total Records", len(metrics))
@@ -38,12 +23,12 @@ col4.metric("Avg Memory", round(metrics["memory_usage"].mean(),2))
 
 st.divider()
 
-# ---------- STATUS PANEL ----------
-health = 100 - (
-    metrics["cpu_usage"].iloc[-1]*0.4 +
-    metrics["memory_usage"].iloc[-1]*0.4 +
-    metrics["disk_usage"].iloc[-1]*0.2
-)
+# ---------- HEALTH STATUS ----------
+latest_cpu = metrics["cpu_usage"].iloc[-1]
+latest_mem = metrics["memory_usage"].iloc[-1]
+latest_disk = metrics["disk_usage"].iloc[-1]
+
+health = 100 - (latest_cpu*0.4 + latest_mem*0.4 + latest_disk*0.2)
 
 if health > 70:
     st.success("🟢 System Running Normally")
@@ -54,17 +39,5 @@ else:
 
 st.divider()
 
-# ---------- FEATURE GRID ----------
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.info("📊 Real-Time Monitoring")
-
-with c2:
-    st.info("🤖 AI Failure Prediction")
-
-with c3:
-    st.info("🚨 Smart Alert Engine")
-
-st.markdown("---")
-st.caption("SentinelOps © AI System Monitoring Platform")
+st.subheader("Recent Alerts")
+st.dataframe(alerts.tail(10), use_container_width=True)
