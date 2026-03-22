@@ -3,7 +3,7 @@ import pandas as pd
 
 st.title("🚨 Alert Center")
 
-alerts = pd.read_csv("data/alerts.csv")
+alerts = pd.read_csv("../data/alerts.csv")
 
 level = st.selectbox("Filter Severity", ["ALL","WARNING","CRITICAL"])
 

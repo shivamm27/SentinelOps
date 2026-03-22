@@ -5,7 +5,7 @@ from sklearn.ensemble import IsolationForest
 
 st.title("🤖 AI Analytics")
 
-metrics = pd.read_csv("data/metrics.csv")
+metrics = pd.read_csv("../data/metrics.csv")
 
 features = metrics[["cpu_usage","memory_usage","disk_usage"]]
 

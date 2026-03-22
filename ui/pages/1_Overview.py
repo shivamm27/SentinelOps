@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.title("📊 System Overview")
 
-metrics = pd.read_csv("data/metrics.csv")
+metrics = pd.read_csv("../data/metrics.csv")
 
 fig = px.line(
     metrics,

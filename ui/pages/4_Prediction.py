@@ -5,7 +5,7 @@ from statsmodels.tsa.arima.model import ARIMA
 
 st.title("🔮 Failure Prediction")
 
-metrics = pd.read_csv("data/metrics.csv")
+metrics = pd.read_csv("../data/metrics.csv")
 
 cpu_series = metrics["cpu_usage"]
 

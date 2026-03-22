@@ -28,8 +28,8 @@ div[data-testid="metric-container"] {
 """, unsafe_allow_html=True)
 
 # ---------- LOAD DATA ----------
-metrics = pd.read_csv("data/metrics.csv")
-alerts = pd.read_csv("data/alerts.csv")
+metrics = pd.read_csv("../data/metrics.csv")
+alerts = pd.read_csv("../data/alerts.csv")
 
 # ---------- HEADER ----------
 st.markdown("""
