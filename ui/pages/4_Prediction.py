@@ -1,37 +1,54 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 from statsmodels.tsa.arima.model import ARIMA
 
 st.title("🔮 Failure Prediction")
 
 metrics = pd.read_csv("data/metrics.csv")
 
-cpu = metrics["cpu_usage"]
+cpu_series = metrics["cpu_usage"]
 
-model = ARIMA(cpu, order=(3,1,2))
-fit = model.fit()
+# ---------- TRAIN MODEL ----------
+model = ARIMA(cpu_series, order=(3,1,2))
+model_fit = model.fit()
 
-forecast = fit.forecast(steps=10)
+# ---------- FORECAST ----------
+forecast_steps = 10
+forecast = model_fit.forecast(steps=forecast_steps)
 
-risk = forecast.mean()
+# Convert forecast to proper list
+forecast_values = forecast.tolist()
+
+# Create future index
+future_index = list(range(len(cpu_series), len(cpu_series) + forecast_steps))
+
+# ---------- RISK ----------
+risk = sum(forecast_values) / len(forecast_values)
 
 st.metric("Predicted CPU Load", round(risk,2))
 
 if risk > 80:
-    st.error("High Failure Risk")
+    st.error("🔴 High Failure Risk")
 elif risk > 60:
-    st.warning("Moderate Risk")
+    st.warning("🟡 Moderate Risk")
 else:
-    st.success("System Safe")
+    st.success("🟢 System Safe")
 
-fig = px.line(y=cpu, title="CPU Forecast")
+# ---------- PLOT ----------
+fig = go.Figure()
 
-fig.add_scatter(
-    x=range(len(cpu), len(cpu)+10),
-    y=forecast,
+fig.add_trace(go.Scatter(
+    y=cpu_series.tolist(),
     mode="lines",
-    name="Forecast"
-)
+    name="Historical CPU"
+))
+
+fig.add_trace(go.Scatter(
+    x=future_index,
+    y=forecast_values,
+    mode="lines",
+    name="Forecast CPU"
+))
 
 st.plotly_chart(fig, use_container_width=True)
