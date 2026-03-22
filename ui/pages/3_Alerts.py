@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
 st.title("🚨 Alert Center")
 
-alerts = pd.read_csv("../data/alerts.csv")
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATA_DIR = BASE_DIR / "data"
 
-level = st.selectbox("Filter Severity", ["ALL","WARNING","CRITICAL"])
+alerts = pd.read_csv(DATA_DIR / "alerts.csv")
+
+level = st.selectbox("Filter", ["ALL","WARNING","CRITICAL"])
 
 if level != "ALL":
     alerts = alerts[alerts["alert_level"] == level]
