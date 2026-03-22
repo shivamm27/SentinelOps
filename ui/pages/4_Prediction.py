@@ -3,38 +3,33 @@ import pandas as pd
 import plotly.express as px
 from statsmodels.tsa.arima.model import ARIMA
 
-st.title("🔮 Failure Prediction Engine")
+st.title("🔮 Failure Prediction")
 
 metrics = pd.read_csv("data/metrics.csv")
 
-cpu_series = metrics["cpu_usage"]
+cpu = metrics["cpu_usage"]
 
-model = ARIMA(cpu_series, order=(3,1,2))
-model_fit = model.fit()
+model = ARIMA(cpu, order=(3,1,2))
+fit = model.fit()
 
-forecast = model_fit.forecast(steps=10)
-
-forecast_df = pd.DataFrame({
-    "step": range(len(cpu_series), len(cpu_series)+10),
-    "forecast_cpu": forecast
-})
+forecast = fit.forecast(steps=10)
 
 risk = forecast.mean()
 
-st.metric("Predicted CPU Load", f"{risk:.2f}%")
+st.metric("Predicted CPU Load", round(risk,2))
 
 if risk > 80:
-    st.error("🔴 High Failure Risk Predicted")
+    st.error("High Failure Risk")
 elif risk > 60:
-    st.warning("🟡 Moderate Risk")
+    st.warning("Moderate Risk")
 else:
-    st.success("🟢 System Stable")
+    st.success("System Safe")
 
-fig = px.line(y=cpu_series, title="CPU Forecast")
+fig = px.line(y=cpu, title="CPU Forecast")
 
 fig.add_scatter(
-    x=forecast_df["step"],
-    y=forecast_df["forecast_cpu"],
+    x=range(len(cpu), len(cpu)+10),
+    y=forecast,
     mode="lines",
     name="Forecast"
 )
